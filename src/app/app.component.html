@@ -6,5 +6,11 @@
 
 <h2 *ngIf="!this.loading">Graph</h2>
 
+<div class="graph" *ngIf="!this.loading">
+  <ngx-charts-bar-vertical [view]="[1000,800]" [results]="saleData" [xAxisLabel]="'Bank'" [legendTitle]="'Banks'"
+    [yAxisLabel]="'Total value'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true"
+    [yAxis]="true" [gradient]="true">
+  </ngx-charts-bar-vertical>
+</div>
 
 <mat-spinner *ngIf="this.loading"></mat-spinner>
