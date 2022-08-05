@@ -8,11 +8,17 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ControllerGraphComponent } from './components/controller-graph/controller-graph.component';
+import { SearchSelectorComponent } from './components/search-selector/search-selector.component';
+import { SearchTextComponent } from './components/search-text/search-text.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
     AppComponent,
     ControllerGraphComponent,
+    SearchSelectorComponent,
+    SearchTextComponent,
 
   ],
   imports: [
@@ -22,9 +28,9 @@ import { ControllerGraphComponent } from './components/controller-graph/controll
     NoopAnimationsModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
-    NgxChartsModule
-
-
+    NgxChartsModule,
+    MatSelectModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,16 +1,19 @@
-<h2>Menu</h2>
-<h3>Filtro tarjeta</h3>
-<h3>Filtro Texto</h3>
+<div class="main-container">
+  <h2>Menu</h2>
+  <app-search-selector *ngIf="this.creditCardsReady" [loading]="!this.creditCardsReady"
+    [setCards]="this.bankCreditCards">
+  </app-search-selector>
+  <app-search-text></app-search-text>
 
 
+  <h2 *ngIf="!this.loading">Graph</h2>
 
-<h2 *ngIf="!this.loading">Graph</h2>
+  <div class="graph" *ngIf="!this.loading">
+    <ngx-charts-bar-vertical [view]="[1000,800]" [results]="saleData" [xAxisLabel]="'Bank'" [legendTitle]="'Banks'"
+      [yAxisLabel]="'Total value'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true"
+      [yAxis]="true" [gradient]="true">
+    </ngx-charts-bar-vertical>
+  </div>
 
-<div class="graph" *ngIf="!this.loading">
-  <ngx-charts-bar-vertical [view]="[1000,800]" [results]="saleData" [xAxisLabel]="'Bank'" [legendTitle]="'Banks'"
-    [yAxisLabel]="'Total value'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true"
-    [yAxis]="true" [gradient]="true">
-  </ngx-charts-bar-vertical>
+  <mat-spinner *ngIf="this.loading"></mat-spinner>
 </div>
-
-<mat-spinner *ngIf="this.loading"></mat-spinner>
