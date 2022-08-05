@@ -16,6 +16,7 @@ interface BankSummary {
 export class AppComponent implements OnInit {
   title = 'prenomics-bank';
 
+  public loading: boolean;
   public bankArray: Bank[];
   public bankSummary: { [key: string]: any } = {};
 
@@ -23,25 +24,26 @@ export class AppComponent implements OnInit {
 
   constructor(private httpClient: HttpClient) {
     this.bankArray = [];
+    this.loading = false;
     // this.bankSummary = {};
 
 
   }
   ngOnInit(): void {
+
     this.readCSV('assets/payments500000v2.csv')
-
-
-    console.log("🚀 ~ file: app.component.ts this.bankSummary", this.bankSummary)
+    console.log(this.bankSummary)
   }
 
 
 
   private readCSV(path: string) {
+    this.loading = true;
     this.httpClient.get(path, { responseType: 'text' }).subscribe(
       data => {
         let bankCSV = data.split("\n");
-        for (let index = 1; index < bankCSV.length - 1; index++) {
-          // for (let index = 1; index < 20; index++) { //TODO.. remove
+        // for (let index = 1; index < bankCSV.length - 1; index++) {
+        for (let index = 1; index < 1000; index++) { //TODO.. remove
           // const element = array[index];
 
           /**
@@ -59,8 +61,6 @@ export class AppComponent implements OnInit {
           let row = bankCSV[index].split(",");
           const currentBank = new Bank(row[4], parseInt(row[0], 10))
           this.bankArray.push(currentBank)
-          console.log("🚀 ~ file: app.component.ts ~ line 39 ~ AppComponent ~ constructor ~ this.bankArray", this.bankArray)
-
 
 
           if (!this.bankSummary.hasOwnProperty(currentBank.getName())) {
@@ -74,5 +74,7 @@ export class AppComponent implements OnInit {
         console.error(error)
       }
     )
+    this.loading = false;
   }
+
 }
