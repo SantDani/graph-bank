@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   public creditCardsReady: boolean;
 
 
-  public bankCreditCards = new Set();
+
 
 
 
@@ -36,22 +36,7 @@ export class AppComponent implements OnInit {
     this.loading = true;
 
     this.loading = false;
-
-
-
-
-
   }
-
-
-  setCreditCard(currentBank: Bank) {
-    this.bankCreditCards.add(currentBank.getCreditCard());
-  }
-
-
-
-
-
   //TODO.. We will be back
   // public filterByCard(creditCard: string) {
   //   if (creditCard.length > 0) {
