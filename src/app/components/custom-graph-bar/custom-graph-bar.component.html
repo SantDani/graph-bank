@@ -1,22 +1,22 @@
 <div class="custom-graph-bar">
   <h2 *ngIf="!this.loading">Graph</h2>
 
+  <mat-spinner *ngIf="this.loading"></mat-spinner>
   <div class="graph" *ngIf="!this.loading">
     <ngx-charts-bar-vertical
-      [view]="[1000, 800]"
-      [results]="this.loading ? [] : this.dataSource"
-      [xAxisLabel]="'Bank'"
-      [legendTitle]="'Banks'"
-      [yAxisLabel]="'Total value'"
-      [legend]="true"
-      [showXAxisLabel]="true"
-      [showYAxisLabel]="true"
-      [xAxis]="true"
-      [yAxis]="true"
-      [gradient]="true"
+      [view]="view"
+      [results]="this.loading ? [] : this._dataSource"
+      [legendTitle]="this.legendTitle"
+      [xAxisLabel]="this.xAxisLabel"
+      [yAxisLabel]="this.yAxisLabel"
+      [legend]="this.legend"
+      [showXAxisLabel]="this.showXAxisLabel"
+      [showYAxisLabel]="this.showYAxisLabel"
+      [xAxis]="this.xAxis"
+      [yAxis]="this.yAxis"
+      [gradient]="this.gradient"
+      [roundEdges]="this.roundEdges"
     >
     </ngx-charts-bar-vertical>
   </div>
-
-  <mat-spinner *ngIf="this.loading"></mat-spinner>
 </div>

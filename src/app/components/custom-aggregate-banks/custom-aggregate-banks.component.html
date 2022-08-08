@@ -1,3 +1,15 @@
 <div class="custom-aggregate-banks">
-  <app-custom-graph-bar [dataSource]="this.dataSource"></app-custom-graph-bar>
+  <app-custom-graph-bar
+    [dataSource]="this.dataSource"
+    [legendTitle]="'Banks'"
+    [xAxisLabel]="'Banks'"
+    [yAxisLabel]="'Total Value'"
+    [legend]="true"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxis]="true"
+    [yAxis]="true"
+    [gradient]="true"
+    [roundEdges]="true"
+  ></app-custom-graph-bar>
 </div>
