@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+
 
 @Component({
   selector: 'app-search-selector',
@@ -12,14 +13,19 @@ export class SearchSelectorComponent implements OnInit {
     this.cards = Array.from(setCards);
   }
   public cards: string[] = [];
-
   @Input() public loading: boolean = true;
+  public selectedCard: string;
 
+  @Output() onChangeCard = new EventEmitter<string>();
 
   constructor() {
+    this.selectedCard = '';
   }
 
   ngOnInit(): void {
   }
 
+  public selectedCreditCard() {
+    this.onChangeCard.emit(this.selectedCard)
+  }
 }

@@ -1,7 +1,11 @@
 <mat-spinner *ngIf="this.loading"></mat-spinner>
 <mat-form-field *ngIf="!this.loading" appearance="fill">
-    <mat-label>Choose an option</mat-label>
-    <select matNativeControl>
-        <option [value]="card" *ngFor="let card of cards"> {{card}}</option>
+    <mat-label>Choose a credit card</mat-label>
+    <select matNativeControl [(ngModel)]="this.selectedCard" (change)="selectedCreditCard()">
+        <option label="none selected"></option>
+        <option [value]="card" *ngFor="let card of cards">
+            {{card}}
+        </option>
+
     </select>
 </mat-form-field>

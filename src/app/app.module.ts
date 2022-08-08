@@ -12,6 +12,11 @@ import { SearchSelectorComponent } from './components/search-selector/search-sel
 import { SearchTextComponent } from './components/search-text/search-text.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HomeComponent } from './pages/home/home.component';
+import { CustomGraphBarComponent } from './components/custom-graph-bar/custom-graph-bar.component';
+import { CustomAggregateBanksComponent } from './components/custom-aggregate-banks/custom-aggregate-banks.component';
+
 
 @NgModule({
   declarations: [
@@ -19,6 +24,9 @@ import { MatInputModule } from '@angular/material/input';
     ControllerGraphComponent,
     SearchSelectorComponent,
     SearchTextComponent,
+    HomeComponent,
+    CustomGraphBarComponent,
+    CustomAggregateBanksComponent,
 
   ],
   imports: [
@@ -30,7 +38,9 @@ import { MatInputModule } from '@angular/material/input';
     MatProgressSpinnerModule,
     NgxChartsModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    FormsModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
