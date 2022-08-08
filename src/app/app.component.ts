@@ -37,20 +37,6 @@ export class AppComponent implements OnInit {
 
     this.loading = false;
   }
-  //TODO.. We will be back
-  // public filterByCard(creditCard: string) {
-  //   if (creditCard.length > 0) {
-  //     this.loading = true;
-  //     this.bankSummary = [];
-  //     this.bankArray.map(bank => {
-  //       if (bank.getCreditCard() === creditCard) {
-  //         this.aggregateCurrentBank(bank)
-  //       }
-  //     })
-  //     this.loading = false;
-  //     this.loadGraph();
-  //   }
 
-  // }
 
 }

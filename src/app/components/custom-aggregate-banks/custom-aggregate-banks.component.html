@@ -1,9 +1,12 @@
 <div class="custom-aggregate-banks">
   <!-- *ngIf="this.creditCardsReady" -->
-  <!-- [loading]="!this.creditCardsReady" -->
-  <!-- [setCards]="this.bankCreditCards" -->
-  <!-- (onChangeCard)="filterByCard($event)" -->
-  <app-search-selector> </app-search-selector>
+  <h2>Filter by Credit card</h2>
+  <app-search-selector
+    [cards]="this.bankCreditCards"
+    (onChangeCard)="filterByCard($event)"
+  >
+  </app-search-selector>
+  <app-search-text></app-search-text>
   <app-custom-graph-bar
     [dataSource]="this.dataSource"
     [legendTitle]="'Banks'"

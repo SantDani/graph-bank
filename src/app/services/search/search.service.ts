@@ -1,3 +1,4 @@
+import { IBankSummary } from "src/app/components/custom-aggregate-banks/custom-aggregate-banks.component";
 import { Bank } from "src/app/models/bank.model";
 
 
@@ -6,6 +7,7 @@ export class SearchService {
 
   /** Contains all the registers from banks */
   private registerBanks: Bank[] = []
+
   constructor() { }
 
   /**
@@ -36,4 +38,26 @@ export class SearchService {
   public getRegisterBanks(): Bank[] {
     return this.registerBanks;
   }
+
+  public filterByCard(creditCardSelected: string): IBankSummary {
+    let summaryCreditCard: IBankSummary = {};
+    if (creditCardSelected !== undefined && creditCardSelected !== null && creditCardSelected.length > 0) {
+
+      // this.loading = true
+
+      // this.loading = false
+      this.registerBanks.map(registerBank => {
+        if (registerBank.creditCard === creditCardSelected) {
+          if (!summaryCreditCard.hasOwnProperty(registerBank.name)) {
+            summaryCreditCard[registerBank.name] = registerBank.totalPrice
+          } else {
+            summaryCreditCard[registerBank.name] += registerBank.totalPrice
+          }
+        }
+      })
+      return summaryCreditCard
+    }
+    return summaryCreditCard;
+  }
+
 }

@@ -9,20 +9,21 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class SearchSelectorComponent implements OnInit {
 
   @Input()
-  set setCards(setCards: any) {
-    this.cards = Array.from(setCards);
-  }
   public cards: string[] = [];
-  @Input() public loading: boolean = true;
+  @Input() public loading: boolean = false;
   public selectedCard: string;
+  @Input() orderByName: boolean = true;
 
   @Output() onChangeCard = new EventEmitter<string>();
+
+
 
   constructor() {
     this.selectedCard = '';
   }
 
   ngOnInit(): void {
+
   }
 
   public selectedCreditCard() {

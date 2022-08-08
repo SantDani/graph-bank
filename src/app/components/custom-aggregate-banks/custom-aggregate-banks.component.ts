@@ -5,6 +5,9 @@ import { ReadFilesService } from 'src/app/services/readFiles/read-files.service'
 import { SearchService } from 'src/app/services/search/search.service';
 import { IDataSource } from '../custom-graph-bar/custom-graph-bar.component';
 
+export declare interface IBankSummary {
+  [key: string]: any
+}
 @Component({
   selector: 'app-custom-aggregate-banks',
   templateUrl: './custom-aggregate-banks.component.html',
@@ -16,12 +19,14 @@ export class CustomAggregateBanksComponent implements OnInit {
   /** Contains all the registers from banks */
   public bankArray: Bank[] = [];
   /** Contains the sum total of the banks' records */
-  public bankSummary: { [key: string]: any } = {};
+  public bankSummary: IBankSummary = {};
+  /** Contains the sum total of the banks filter by a credit card */
+  public bankSummaryCreditCard: IBankSummary = {};
   /** Data of graph */
   public dataSource: IDataSource[] = [];
+  /** Contains all the names of credit cards */
+  public bankCreditCards: string[] = [];
 
-  /**  */
-  public bankCreditCards = new Set();
   /**
    * Inject dependencies
    * @param readFilesService Allows read files 
@@ -38,7 +43,9 @@ export class CustomAggregateBanksComponent implements OnInit {
       const data = await lastValueFrom(result$)
       this.bankArray = this.searchService.loadData(data);
       this.aggregateCurrentBank()
-      this.loadGraph();
+      this.bankCreditCards = this.setCreditCard(this.bankArray);
+      console.log("🚀 ~ file: custom-aggregate-banks.component.ts ~ line 42 ~ CustomAggregateBanksComponent ~ ngOnInit ~ this.bankCreditCards ", this.bankCreditCards)
+      this.loadGraph(this.bankSummary);
 
 
     } catch (error) {
@@ -46,29 +53,38 @@ export class CustomAggregateBanksComponent implements OnInit {
     }
   }
 
-  private loadGraph() {
-    Object.keys(this.bankSummary).forEach(key => {
-      this.dataSource.push({ name: key, value: this.bankSummary[key] })
+  private loadGraph(bankSummary: IBankSummary): void {
+    this.dataSource = [];
+    Object.keys(bankSummary).forEach(key => {
+      this.dataSource.push({ name: key, value: bankSummary[key] })
     })
 
-    this.dataSource = [...this.dataSource];// refresh
+    // this.dataSource.sort((a, b) => (a.name > b.name) ? 1 : -1)
+    this.dataSource.sort((a, b) => (a.name > b.name) ? 1 : -1)
+    // this.dataSource = [...this.dataSource];// refresh
   }
-
-
 
   private aggregateCurrentBank() {
     for (let index = 1; index < this.bankArray.length; index++) {
-      if (!this.bankSummary.hasOwnProperty(this.bankArray[index].getName())) {
-        this.bankSummary[this.bankArray[index].getName()] = this.bankArray[index].getTotalPrice();
+      if (!this.bankSummary.hasOwnProperty(this.bankArray[index].name)) {
+        this.bankSummary[this.bankArray[index].name] = this.bankArray[index].totalPrice;
       } else {
-        this.bankSummary[this.bankArray[index].getName()] = this.bankArray[index].getTotalPrice() + this.bankSummary[this.bankArray[index].getName()];
+        this.bankSummary[this.bankArray[index].name] = this.bankArray[index].totalPrice + this.bankSummary[this.bankArray[index].name];
       }
     }
   }
 
-  setCreditCard(currentBank: Bank) {
-    this.bankCreditCards.add(currentBank.getCreditCard());
+  private setCreditCard(registerBanks: Bank[]): string[] {
+    const creditCardNames = new Set('');
+    registerBanks.map(register => creditCardNames.add(register.creditCard))
+
+    return Array.from(creditCardNames).sort();
   }
 
+  public filterByCard(creditCard: string) {
+    const summaryByCreditCards = this.searchService.filterByCard(creditCard);
+    if (Object.keys(summaryByCreditCards).length > 0) this.loadGraph(summaryByCreditCards)
+    else this.loadGraph(this.bankSummary)
 
+  }
 }

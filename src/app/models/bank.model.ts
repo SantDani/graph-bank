@@ -1,7 +1,7 @@
 export class Bank {
-    private total_price: number;
-    private bank: string;
-    private credit_card: string;
+    private _total_price: number;
+    private _name: string;
+    private _credit_card: string;
 
 
     /**    
@@ -16,21 +16,21 @@ export class Bank {
         8 - country 
     */
     constructor(row: string[]) {
-        this.bank = row[4];
-        this.total_price = parseInt(row[0], 10);
-        this.credit_card = row[3];
+        this._name = row[4];
+        this._total_price = parseFloat(parseFloat(row[0]).toFixed(2)); // get only 2 decimals
+        this._credit_card = row[3];
     }
 
-    public getName(): string {
-        return this.bank;
+    get name(): string {
+        return this._name;
     }
 
-    public getTotalPrice() {
-        return this.total_price;
+    get totalPrice() {
+        return this._total_price;
     }
 
-    public getCreditCard() {
-        return this.credit_card;
+    get creditCard(): string {
+        return this._credit_card;
     }
 
 }
