@@ -84,6 +84,10 @@ export class CustomAggregateBanksComponent implements OnInit {
     const summaryByCreditCards = this.searchService.filterByCard(creditCard);
     if (Object.keys(summaryByCreditCards).length > 0) this.loadGraph(summaryByCreditCards)
     else this.loadGraph(this.bankSummary)
+  }
+
+  public filterByText(textSearch: string) {
+    console.log("🚀 ~ file: custom-aggregate-banks.component.ts ~ line 90 ~ CustomAggregateBanksComponent ~ filterByText ~ textSearch", textSearch)
 
   }
 }

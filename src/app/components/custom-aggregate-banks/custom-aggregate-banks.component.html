@@ -6,7 +6,7 @@
     (onChangeCard)="filterByCard($event)"
   >
   </app-search-selector>
-  <app-search-text></app-search-text>
+  <app-search-text (onChange)="this.filterByText($event)"></app-search-text>
 
   <mat-tab-group mat-align-tabs="center">
     <mat-tab label="List">

@@ -1,5 +1,33 @@
-<div class="search-text">
+<!-- <div class="search-text">
   <mat-form-field>
-    <input type="text" matInput placeholder="Search" />
+    <input
+      type="text"
+      matInput
+      placeholder="Search"
+      [(ngModel)]="this.textSearch"
+      (keyup.enter)="this.onChangeText()"
+    />
   </mat-form-field>
-</div>
+</div> -->
+
+<section class="search-text">
+  <div class="keyword-warpper">
+    <input
+      [formControl]="this.queryField"
+      type="text"
+      name=""
+      id=""
+      placeholder="Search"
+      autofocus
+      (keyup.enter)="this.onChangeText()"
+    />
+  </div>
+  <ul class="filter-select">
+    <li class="filter-select-list" *ngFor="let result of results">
+      <strong>{{ result.name }}</strong>
+      <p>{{ result.creditCard }}</p>
+      <span>{{ result.creditCard }}</span>
+      <span>{{ result.retailCategory }}</span>
+    </li>
+  </ul>
+</section>

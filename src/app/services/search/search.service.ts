@@ -19,15 +19,17 @@ export class SearchService {
 
     const bankCSV = data.split("\n");
     for (let index = 1; index < bankCSV.length - 1; index++) {
-      // for (let index = 1; index < 300 - 1; index++) {
       let row = bankCSV[index].split(",");
       this.registerBanks.push(new Bank(row))
     }
-
-    return this.registerBanks;
+    this.sortDescending();
+    return this.registerBanks
   }
 
 
+  private sortDescending(): void {
+    this.registerBanks.sort((a, b) => (a.dateTime > b.dateTime) ? -1 : 1);
+  }
   /**
    * Returns a array that contains the registers of all the banks
    * @returns register of the banks
@@ -39,10 +41,6 @@ export class SearchService {
   public filterByCard(creditCardSelected: string): IBankSummary {
     let summaryCreditCard: IBankSummary = {};
     if (creditCardSelected !== undefined && creditCardSelected !== null && creditCardSelected.length > 0) {
-
-      // this.loading = true
-
-      // this.loading = false
       this.registerBanks.map(registerBank => {
         if (registerBank.creditCard === creditCardSelected) {
           if (!summaryCreditCard.hasOwnProperty(registerBank.name)) {
@@ -57,4 +55,33 @@ export class SearchService {
     return summaryCreditCard;
   }
 
+  public filterByString(text: string): Bank[] {
+    let machRegisters: Bank[] = []
+    if (text !== undefined && text !== null) {
+      machRegisters = this.registerBanks.filter((register: Bank) => this.isInclude(register, text))
+    }
+
+    return machRegisters;
+  }
+
+  private isInclude(register: any, text: string) {
+    return Object.keys(register).some(key => {
+      let isInclude = false;
+      switch (typeof register[key]) {
+        case 'string':
+          isInclude = register[key].toLocaleLowerCase().includes(text.toLocaleLowerCase())
+          break;
+        case 'number':
+          isInclude = register[key].toLocaleString().toLocaleLowerCase().includes(text.toLocaleLowerCase())
+          break;
+        case 'object':
+          break;
+        //TODO.. search by date?
+        default:
+          isInclude = false;
+          break;
+      }
+      return isInclude;
+    })
+  }
 }

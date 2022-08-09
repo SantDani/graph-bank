@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Subject } from 'rxjs';
 
 
 @Component({
@@ -12,19 +13,14 @@ export class SearchSelectorComponent implements OnInit {
   public cards: string[] = [];
   @Input() public loading: boolean = false;
   public selectedCard: string;
-  @Input() orderByName: boolean = true;
 
   @Output() onChangeCard = new EventEmitter<string>();
-
-
 
   constructor() {
     this.selectedCard = '';
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
   public selectedCreditCard() {
     this.onChangeCard.emit(this.selectedCard)
