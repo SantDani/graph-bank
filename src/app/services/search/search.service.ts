@@ -19,13 +19,10 @@ export class SearchService {
 
     const bankCSV = data.split("\n");
     for (let index = 1; index < bankCSV.length - 1; index++) {
+      // for (let index = 1; index < 300 - 1; index++) {
       let row = bankCSV[index].split(",");
-
       this.registerBanks.push(new Bank(row))
-      // this.aggregateCurrentBank(currentBank);
-      // this.setCreditCard(currentBank);
     }
-    // this.creditCardsReady = true;
 
     return this.registerBanks;
   }

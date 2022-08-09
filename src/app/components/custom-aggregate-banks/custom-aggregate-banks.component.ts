@@ -44,7 +44,6 @@ export class CustomAggregateBanksComponent implements OnInit {
       this.bankArray = this.searchService.loadData(data);
       this.aggregateCurrentBank()
       this.bankCreditCards = this.setCreditCard(this.bankArray);
-      console.log("🚀 ~ file: custom-aggregate-banks.component.ts ~ line 42 ~ CustomAggregateBanksComponent ~ ngOnInit ~ this.bankCreditCards ", this.bankCreditCards)
       this.loadGraph(this.bankSummary);
 
 

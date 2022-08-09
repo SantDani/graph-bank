@@ -16,7 +16,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './pages/home/home.component';
 import { CustomGraphBarComponent } from './components/custom-graph-bar/custom-graph-bar.component';
 import { CustomAggregateBanksComponent } from './components/custom-aggregate-banks/custom-aggregate-banks.component';
-
+import { MatTabsModule } from '@angular/material/tabs';
+import { TableRegistersComponent } from './components/table-registers/table-registers.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,7 @@ import { CustomAggregateBanksComponent } from './components/custom-aggregate-ban
     HomeComponent,
     CustomGraphBarComponent,
     CustomAggregateBanksComponent,
+    TableRegistersComponent,
 
   ],
   imports: [
@@ -39,7 +43,10 @@ import { CustomAggregateBanksComponent } from './components/custom-aggregate-ban
     NgxChartsModule,
     MatSelectModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatTabsModule,
+    MatPaginatorModule,
+    MatTableModule
 
   ],
   providers: [],

@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { lastValueFrom, map, Observable } from 'rxjs';
-import { Bank } from './models/bank.model';
-import { ReadFilesService } from './services/readFiles/read-files.service';
+
 
 
 @Component({
@@ -14,13 +11,7 @@ export class AppComponent implements OnInit {
   title = 'prenomics-bank';
 
   public loading: boolean;
-  public creditCardsReady: boolean;
-
-
-
-
-
-
+  public creditCardsReady: boolean
 
   constructor() {
 
