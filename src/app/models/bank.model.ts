@@ -32,7 +32,7 @@ export class Bank implements IBank {
         8 - country 
     */
     constructor(row: string[]) {
-        this._totalPrice = parseFloat(parseFloat(row[0]).toFixed(2)); // get only 2 decimals
+        this._totalPrice = parseFloat(parseFloat(row[0]).toFixed(10)); // get only 2 decimals
         this._numberItems = parseInt(row[1]);
         this._dateTime = new Date(row[2]);
         this._creditCard = row[3];

@@ -1,6 +1,8 @@
 <div class="custom-aggregate-banks">
   <!-- *ngIf="this.creditCardsReady" -->
   <h2>Search</h2>
+  {{ this.totalMatch }}
+  {{ this.filterTextOn }}
   <section class="container-search">
     <div class="row">
       <app-search-selector
@@ -42,7 +44,10 @@
   </ng-template>
 
   <ng-template #tableRegisters>
-    <app-table-registers *ngIf="this.bankArray" [dataSource]="this.bankArray">
+    <app-table-registers
+      *ngIf="this.bankArray"
+      [dataSource]="this.filterTextOn ? this.bankArrayFiltered : this.bankArray"
+    >
     </app-table-registers>
   </ng-template>
 </div>

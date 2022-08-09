@@ -10,6 +10,7 @@ export class SearchService {
   /** */
   private registerFiltered: Bank[] = [];
 
+  private totalMatch: number = 0;
   constructor() { }
 
   /**
@@ -26,6 +27,7 @@ export class SearchService {
       this.registerBanks.push(new Bank(row))
     }
     this.sortDescending();
+    this.totalMatch = this.registerBanks.length;
     return this.registerBanks
   }
 
@@ -41,8 +43,14 @@ export class SearchService {
     return this.registerBanks;
   }
 
+
+  public getRegisterFiltered(): Bank[] {
+    return this.registerFiltered;
+  }
+
   public filterByCard(creditCardSelected: string): IBankSummary {
     let summaryCreditCard: IBankSummary = {};
+    let totalAggregate = 0;
     if (creditCardSelected !== undefined && creditCardSelected !== null && creditCardSelected.length > 0) {
       this.registerBanks.map(registerBank => {
         if (registerBank.creditCard === creditCardSelected) {
@@ -51,10 +59,14 @@ export class SearchService {
           } else {
             summaryCreditCard[registerBank.name] += registerBank.totalPrice
           }
+          totalAggregate++;
         }
       })
+      this.totalMatch = totalAggregate;
       return summaryCreditCard
     }
+
+    this.totalMatch = totalAggregate;
     return summaryCreditCard;
   }
 
@@ -63,19 +75,21 @@ export class SearchService {
     if (text !== undefined && text !== null) {
       this.registerFiltered = this.registerBanks.filter((register: Bank) => this.isInclude(register, text))
     }
-
+    this.totalMatch = this.registerFiltered.length;
     return this.registerFiltered;
   }
 
-  private isInclude(register: any, text: string) {
+  private isInclude(register: any, text: string): boolean {
+    text = this.removeDiacritic(text).toLocaleLowerCase().trim();
     return Object.keys(register).some(key => {
       let isInclude = false;
       switch (typeof register[key]) {
         case 'string':
-          isInclude = register[key].toLocaleLowerCase().includes(text.toLocaleLowerCase())
+          const currentValue = this.removeDiacritic(register[key]).toLocaleLowerCase();
+          isInclude = currentValue.includes(text)
           break;
         case 'number':
-          isInclude = register[key].toLocaleString().toLocaleLowerCase().includes(text.toLocaleLowerCase())
+          isInclude = register[key].toString().toLocaleLowerCase().includes(text)
           break;
         case 'object':
           break;
@@ -86,5 +100,13 @@ export class SearchService {
       }
       return isInclude;
     })
+  }
+
+  private removeDiacritic(value: string): string {
+    return value.trim().normalize("NFD").replace(/\p{Diacritic}/gu, "")
+  }
+
+  public getTotalMatch(): number {
+    return this.totalMatch;
   }
 }

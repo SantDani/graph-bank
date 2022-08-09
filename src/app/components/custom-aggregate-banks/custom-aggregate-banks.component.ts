@@ -18,6 +18,7 @@ export class CustomAggregateBanksComponent implements OnInit {
 
   /** Contains all the registers from banks */
   public bankArray: Bank[] = [];
+  public bankArrayFiltered: Bank[] = [];
   /** Contains the sum total of the banks' records */
   public bankSummary: IBankSummary = {};
   /** Contains the sum total of the banks filter by a credit card */
@@ -26,6 +27,9 @@ export class CustomAggregateBanksComponent implements OnInit {
   public dataSource: IDataSource[] = [];
   /** Contains all the names of credit cards */
   public bankCreditCards: string[] = [];
+
+  public totalMatch: number = 0;
+  filterTextOn: any;
 
   /**
    * Inject dependencies
@@ -41,7 +45,7 @@ export class CustomAggregateBanksComponent implements OnInit {
 
       const result$ = this.readFilesService.readCSV('assets/payments500000v2.csv');
       const data = await lastValueFrom(result$)
-      this.bankArray = this.searchService.loadData(data, 3150);
+      this.bankArray = this.searchService.loadData(data, 3525);
       this.aggregateCurrentBank()
       this.bankCreditCards = this.setCreditCard(this.bankArray);
       this.loadGraph(this.bankSummary);
@@ -59,6 +63,7 @@ export class CustomAggregateBanksComponent implements OnInit {
     })
 
     // this.dataSource.sort((a, b) => (a.name > b.name) ? 1 : -1)
+    this.totalMatch = this.searchService.getTotalMatch();
     this.dataSource.sort((a, b) => (a.name > b.name) ? 1 : -1)
     // this.dataSource = [...this.dataSource];// refresh
   }
@@ -87,7 +92,15 @@ export class CustomAggregateBanksComponent implements OnInit {
   }
 
   public filterByText(textSearch: string) {
-    console.log("🚀 ~ file: custom-aggregate-banks.component.ts ~ line 90 ~ CustomAggregateBanksComponent ~ filterByText ~ textSearch", textSearch)
+    this.totalMatch = this.searchService.getTotalMatch();
+    const resultFilter = this.searchService.getRegisterFiltered();
+    if (resultFilter.length > 0) {
+      this.bankArrayFiltered = resultFilter;
+    } else {
 
+      this.bankArrayFiltered = []
+    }
+    this.filterTextOn = this.bankArrayFiltered.length > 0;
+    // TODO.. bug always appear a register
   }
 }

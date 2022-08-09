@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { text } from 'd3';
-import { debounceTime, distinctUntilChanged, map, Observable, startWith, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, Observable } from 'rxjs';
 import { Bank } from 'src/app/models/bank.model';
 import { SearchService } from 'src/app/services/search/search.service';
 
@@ -35,7 +34,8 @@ export class SearchTextComponent implements OnInit {
 
   public onChangeText(textSearch: string = this.queryField.value): Bank[] {
     this.onChange.emit(textSearch);
-    return textSearch ? [...this.searchService.filterByString(textSearch).slice(0, 5)] : [];
+    const result = textSearch ? [...this.searchService.filterByString(textSearch)] : [];
 
+    return result.slice(0, 5);
   }
 }
