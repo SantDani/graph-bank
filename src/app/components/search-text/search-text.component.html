@@ -1,30 +1,6 @@
-<!-- <section class="search-text">
-  <div class="keyword-warpper">
-    <input
-      [formControl]="this.queryField"
-      type="text"
-      name=""
-      id=""
-      placeholder="Search"
-      autofocus
-      (keyup.enter)="this.onChangeText()"
-    />
-  </div>
-  <ul class="filter-select">
-    <li class="filter-select-list" *ngFor="let result of results">
-      <strong>{{ result.name }}</strong> :
-      <span>{{ result.totalPrice }}</span>
-      <span>{{ result.numberItems }}</span>
-      <span>{{ result.getDateFriendly() }}</span>
-      <span>{{ result.retailType }}</span>
-      <span>{{ result.retailCategory }}</span>
-      <span>{{ result.country }}</span>
-    </li>
-  </ul>
-</section> -->
 <section class="search-text">
-  <form class="example-form">
-    <mat-form-field class="example-full-width" appearance="fill">
+  <form class="container-keyword">
+    <mat-form-field class="keyword-input" appearance="fill">
       <mat-label>State</mat-label>
       <input
         matInput
@@ -35,10 +11,27 @@
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option
           *ngFor="let result of results | async"
-          [value]="result.name"
+          [value]="
+            result.name +
+            ' ' +
+            result.totalPrice +
+            ' ' +
+            result.creditCard +
+            ' ' +
+            result.retailType +
+            ' ' +
+            result.creditCard
+          "
         >
-          <strong>{{ result.name }}</strong> :
-          <span>{{ result.totalPrice }}</span>
+          <span>
+            <strong>{{ result.name }}</strong> |
+          </span>
+          <small><strong>Total</strong>: {{ result.totalPrice }}</small> ,
+          <small><strong>Credit Card</strong>: {{ result.creditCard }}</small> ,
+          <span class="retail-tags">
+            <small> {{ result.retailType }}</small> ,
+            <small> {{ result.retailCategory }}</small>
+          </span>
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>

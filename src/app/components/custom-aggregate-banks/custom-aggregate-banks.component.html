@@ -1,12 +1,20 @@
 <div class="custom-aggregate-banks">
   <!-- *ngIf="this.creditCardsReady" -->
-  <h2>Filter by Credit card</h2>
-  <app-search-selector
-    [cards]="this.bankCreditCards"
-    (onChangeCard)="filterByCard($event)"
-  >
-  </app-search-selector>
-  <app-search-text (onChange)="this.filterByText($event)"></app-search-text>
+  <h2>Search</h2>
+  <section class="container-search">
+    <div class="row">
+      <app-search-selector
+        class="column"
+        [cards]="this.bankCreditCards"
+        (onChangeCard)="filterByCard($event)"
+      >
+      </app-search-selector>
+      <app-search-text
+        class="column-2"
+        (onChange)="this.filterByText($event)"
+      ></app-search-text>
+    </div>
+  </section>
 
   <mat-tab-group mat-align-tabs="center">
     <mat-tab label="List">
