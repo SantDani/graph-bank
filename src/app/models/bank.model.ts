@@ -20,8 +20,6 @@ export class Bank implements IBank {
     private _country: string;
 
 
-
-
     /**    
         Structure rows:
         1 - total_price

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { text } from 'd3';
-import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, Observable, startWith, Subject } from 'rxjs';
 import { Bank } from 'src/app/models/bank.model';
 import { SearchService } from 'src/app/services/search/search.service';
 
@@ -15,7 +15,7 @@ export class SearchTextComponent implements OnInit {
   @Input() debonuceTimeSearch = 100;
   @Output() onChange = new EventEmitter<string>();
 
-  public results: Bank[] = [];
+  public results!: Observable<Bank[]>;
   queryField: FormControl = new FormControl();
 
   public textSearch: string;
@@ -24,21 +24,18 @@ export class SearchTextComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.queryField.valueChanges
+    this.results = this.queryField.valueChanges
       .pipe(
         debounceTime(200),
-        distinctUntilChanged()  // discard an emission that will be a duplicate of its immediate predecessor
+        distinctUntilChanged(),  // discard an emission that will be a duplicate of its immediate predecessor
+        map(textSearch => this.onChangeText(textSearch))
       )
-      .subscribe(textSearch => {
-        this.onChangeText(textSearch)
-      }
-
-      );
   }
 
 
-  public onChangeText(textSearch: string = this.queryField.value) {
+  public onChangeText(textSearch: string = this.queryField.value): Bank[] {
     this.onChange.emit(textSearch);
-    this.results = [...this.searchService.filterByString(textSearch).slice(0, 40)];
+    return textSearch ? [...this.searchService.filterByString(textSearch).slice(0, 5)] : [];
+
   }
 }

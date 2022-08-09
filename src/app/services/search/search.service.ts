@@ -7,6 +7,8 @@ export class SearchService {
 
   /** Contains all the registers from banks */
   private registerBanks: Bank[] = []
+  /** */
+  private registerFiltered: Bank[] = [];
 
   constructor() { }
 
@@ -15,10 +17,11 @@ export class SearchService {
     * @param {string} data value of string that contains the registers
     * @returns {Bank[]} a array with the registers of all the banks
     */
-  public loadData(data: string): Bank[] {
+  public loadData(data: string, registersLoad?: number): Bank[] {
 
     const bankCSV = data.split("\n");
-    for (let index = 1; index < bankCSV.length - 1; index++) {
+    registersLoad = registersLoad ? registersLoad + 1 : bankCSV.length - 1;
+    for (let index = 1; index < registersLoad; index++) {
       let row = bankCSV[index].split(",");
       this.registerBanks.push(new Bank(row))
     }
@@ -56,12 +59,12 @@ export class SearchService {
   }
 
   public filterByString(text: string): Bank[] {
-    let machRegisters: Bank[] = []
+    this.registerFiltered = []
     if (text !== undefined && text !== null) {
-      machRegisters = this.registerBanks.filter((register: Bank) => this.isInclude(register, text))
+      this.registerFiltered = this.registerBanks.filter((register: Bank) => this.isInclude(register, text))
     }
 
-    return machRegisters;
+    return this.registerFiltered;
   }
 
   private isInclude(register: any, text: string) {

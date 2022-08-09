@@ -26,8 +26,8 @@ export class TableRegistersComponent implements OnInit {
   @Input()
   set dataSource(registerBanks: Bank[]) {
     if (registerBanks.length > 0) {
-      // this._dataSource = new MatTableDataSource<Bank>(registerBanks);
-      this._dataSource = new MatTableDataSource<Bank>(registerBanks.slice(1, this.maxRegistersPaginate + 1));
+      this._dataSource = new MatTableDataSource<Bank>(registerBanks);
+      // this._dataSource = new MatTableDataSource<Bank>(registerBanks.slice(1, this.maxRegistersPaginate + 1));
       this.cdr.detectChanges();
       this._dataSource.paginator = this.paginator
     }

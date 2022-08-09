@@ -19,6 +19,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { TableRegistersComponent } from './components/table-registers/table-registers.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { MatTableModule } from '@angular/material/table';
     MatTabsModule,
     MatPaginatorModule,
     MatTableModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatAutocompleteModule
 
   ],
   providers: [],

@@ -1,16 +1,4 @@
-<!-- <div class="search-text">
-  <mat-form-field>
-    <input
-      type="text"
-      matInput
-      placeholder="Search"
-      [(ngModel)]="this.textSearch"
-      (keyup.enter)="this.onChangeText()"
-    />
-  </mat-form-field>
-</div> -->
-
-<section class="search-text">
+<!-- <section class="search-text">
   <div class="keyword-warpper">
     <input
       [formControl]="this.queryField"
@@ -24,10 +12,35 @@
   </div>
   <ul class="filter-select">
     <li class="filter-select-list" *ngFor="let result of results">
-      <strong>{{ result.name }}</strong>
-      <p>{{ result.creditCard }}</p>
-      <span>{{ result.creditCard }}</span>
+      <strong>{{ result.name }}</strong> :
+      <span>{{ result.totalPrice }}</span>
+      <span>{{ result.numberItems }}</span>
+      <span>{{ result.getDateFriendly() }}</span>
+      <span>{{ result.retailType }}</span>
       <span>{{ result.retailCategory }}</span>
+      <span>{{ result.country }}</span>
     </li>
   </ul>
+</section> -->
+<section class="search-text">
+  <form class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>State</mat-label>
+      <input
+        matInput
+        aria-label="State"
+        [matAutocomplete]="auto"
+        [formControl]="queryField"
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option
+          *ngFor="let result of results | async"
+          [value]="result.name"
+        >
+          <strong>{{ result.name }}</strong> :
+          <span>{{ result.totalPrice }}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
 </section>

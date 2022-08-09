@@ -41,7 +41,7 @@ export class CustomAggregateBanksComponent implements OnInit {
 
       const result$ = this.readFilesService.readCSV('assets/payments500000v2.csv');
       const data = await lastValueFrom(result$)
-      this.bankArray = this.searchService.loadData(data);
+      this.bankArray = this.searchService.loadData(data, 3150);
       this.aggregateCurrentBank()
       this.bankCreditCards = this.setCreditCard(this.bankArray);
       this.loadGraph(this.bankSummary);
