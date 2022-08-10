@@ -8,22 +8,22 @@
       <app-search-selector
         class="column"
         [cards]="this.bankCreditCards"
-        (onChangeCard)="filterByCard($event)"
+        (onChangeCard)="filter($event, 'selector')"
       >
       </app-search-selector>
       <app-search-text
         class="column-2"
-        (onChange)="this.filterByText($event)"
+        (onChange)="this.filter($event, 'text')"
       ></app-search-text>
     </div>
   </section>
 
   <mat-tab-group mat-align-tabs="center">
-    <mat-tab label="List">
-      <ng-container *ngTemplateOutlet="tableRegisters"></ng-container>
-    </mat-tab>
     <mat-tab label="Graph">
       <ng-container *ngTemplateOutlet="graphBar"></ng-container>
+    </mat-tab>
+    <mat-tab label="List">
+      <ng-container *ngTemplateOutlet="tableRegisters"></ng-container>
     </mat-tab>
   </mat-tab-group>
 

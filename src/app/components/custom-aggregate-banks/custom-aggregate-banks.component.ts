@@ -6,7 +6,8 @@ import { SearchService } from 'src/app/services/search/search.service';
 import { IDataSource } from '../custom-graph-bar/custom-graph-bar.component';
 
 export declare interface IBankSummary {
-  [key: string]: any
+  [key: string]: any;
+
 }
 @Component({
   selector: 'app-custom-aggregate-banks',
@@ -87,23 +88,39 @@ export class CustomAggregateBanksComponent implements OnInit {
 
   public filterByCard(creditCard: string) {
     const summaryByCreditCards = this.searchService.filterByCard(creditCard);
-    if (Object.keys(summaryByCreditCards).length > 0) this.loadGraph(summaryByCreditCards)
+    if (Object.keys(summaryByCreditCards).length > 0 && creditCard.length > 0) this.loadGraph(summaryByCreditCards)
     else this.loadGraph(this.bankSummary)
   }
 
   public filterByText(textSearch: string) {
     this.totalMatch = this.searchService.getTotalMatch();
     this.textSearch = textSearch;
-    const resultFilter = this.searchService.getRegisterFiltered();
+    this.bankArrayFiltered = this.searchService.getRegisterFiltered();
     this.filterTextOn = textSearch.length > 0
-    if (this.filterTextOn) {
-      this.bankArrayFiltered = resultFilter;
-    } else {
-      this.bankArrayFiltered = [];
-    }
+
   }
 
-  private getDistinctData(data: string) {
+  public filter(filter: string, typeSearch: string) {
+    this.filterTextOn = filter.length > 0;
+    switch (typeSearch) {
+      case 'selector':
+        this.filterByCard(filter);
+        this.bankArrayFiltered = this.searchService.getRegisterFiltered();
+        break;
+      case 'text':
+        this.filterByText(filter);
+        this.bankArrayFiltered = this.searchService.getRegisterFiltered();
+        if (this.filterTextOn) {
+          const summary = this.searchService.getSummaryGraph();
+          this.loadGraph(summary)
+        } else {
+          this.loadGraph(this.bankSummary);
+        }
+
+        break;
+      default:
+        break;
+    }
 
   }
 }

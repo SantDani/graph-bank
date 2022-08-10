@@ -1,3 +1,4 @@
+import { sum } from "d3";
 import { IBankSummary } from "src/app/components/custom-aggregate-banks/custom-aggregate-banks.component";
 import { Bank } from "src/app/models/bank.model";
 
@@ -49,26 +50,66 @@ export class SearchService {
   }
 
   public filterByCard(creditCardSelected: string): IBankSummary {
-    let summaryCreditCard: IBankSummary = {};
-    let totalAggregate = 0;
+    let summaryCreditCard: IBankSummary = { totalRegisters: 0 };
+    this.registerFiltered = [];
+
     if (creditCardSelected !== undefined && creditCardSelected !== null && creditCardSelected.length > 0) {
-      this.registerBanks.map(registerBank => {
-        if (registerBank.creditCard === creditCardSelected) {
-          if (!summaryCreditCard.hasOwnProperty(registerBank.name)) {
-            summaryCreditCard[registerBank.name] = registerBank.totalPrice
-          } else {
-            summaryCreditCard[registerBank.name] += registerBank.totalPrice
-          }
-          totalAggregate++;
-        }
-      })
-      this.totalMatch = totalAggregate;
-      return summaryCreditCard
+
+      summaryCreditCard = this.aggregateRegisters(this.registerBanks, creditCardSelected)
+      // this.registerBanks.map(registerBank => {
+      //   if (registerBank.creditCard === creditCardSelected) {
+      //     if (!summaryCreditCard.hasOwnProperty(registerBank.name)) {
+      //       summaryCreditCard[registerBank.name] = registerBank.totalPrice
+      //     } else {
+      //       summaryCreditCard[registerBank.name] += registerBank.totalPrice
+      //     }
+      //     totalAggregate++;
+      //     this.registerFiltered.push(registerBank)
+      //   }
+
+      // })
+      // this.totalMatch = summaryCreditCard.totalRegisters
+      return summaryCreditCard;
     }
 
-    this.totalMatch = totalAggregate;
+    // this.totalMatch = summaryCreditCard.totalRegisters;
     return summaryCreditCard;
   }
+
+  public aggregateRegisters(registers: Bank[], creditCardSelected: string): IBankSummary {
+    let summaryCreditCard: IBankSummary = { totalRegisters: 0 };
+    let totalAggregate: number = 0;
+    registers.map(registerBank => {
+      if (registerBank.creditCard === creditCardSelected) {
+        if (!summaryCreditCard.hasOwnProperty(registerBank.name)) {
+          summaryCreditCard[registerBank.name] = registerBank.totalPrice
+        } else {
+          summaryCreditCard[registerBank.name] += registerBank.totalPrice
+        }
+        totalAggregate++;
+        this.registerFiltered.push(registerBank)
+      }
+    })
+    // summaryCreditCard.totalRegisters = totalAggregate;
+    return summaryCreditCard;
+  }
+
+  public getSummaryGraph(): IBankSummary {
+    let summaryCreditCard: IBankSummary = { totalRegisters: 0 };
+    let totalAggregate: number = 0;
+    this.registerFiltered.map(registerBank => {
+
+      if (!summaryCreditCard.hasOwnProperty(registerBank.name)) {
+        summaryCreditCard[registerBank.name] = registerBank.totalPrice
+      } else {
+        summaryCreditCard[registerBank.name] += registerBank.totalPrice
+      }
+      totalAggregate++;
+    })
+
+    return summaryCreditCard;
+  }
+
 
   public filterByString(text: string): Bank[] {
     this.registerFiltered = []
