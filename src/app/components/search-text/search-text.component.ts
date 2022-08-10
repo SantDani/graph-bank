@@ -26,7 +26,7 @@ export class SearchTextComponent implements OnInit {
     this.results = this.queryField.valueChanges
       .pipe(
         debounceTime(200),
-        distinctUntilChanged(),  // discard an emission that will be a duplicate of its immediate predecessor
+        distinctUntilChanged(), // discard an emission that will be a duplicate of its immediate predecessor
         map(textSearch => this.onChangeText(textSearch))
       )
   }
@@ -35,7 +35,6 @@ export class SearchTextComponent implements OnInit {
   public onChangeText(textSearch: string = this.queryField.value): Bank[] {
     this.onChange.emit(textSearch);
     const result = textSearch ? [...this.searchService.filterByString(textSearch)] : [];
-
     return result.slice(0, 5);
   }
 }

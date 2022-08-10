@@ -19,21 +19,21 @@ export class SearchService {
     * @returns {Bank[]} a array with the registers of all the banks
     */
   public loadData(data: string, registersLoad?: number): Bank[] {
-
     const bankCSV = data.split("\n");
     registersLoad = registersLoad ? registersLoad + 1 : bankCSV.length - 1;
     for (let index = 1; index < registersLoad; index++) {
       let row = bankCSV[index].split(",");
       this.registerBanks.push(new Bank(row))
+
     }
-    this.sortDescending();
+    this.registerBanks = this.sortDescending(this.registerBanks);
     this.totalMatch = this.registerBanks.length;
-    return this.registerBanks
+    return this.registerBanks;
   }
 
 
-  private sortDescending(): void {
-    this.registerBanks.sort((a, b) => (a.dateTime > b.dateTime) ? -1 : 1);
+  private sortDescending(registers: Bank[]): Bank[] {
+    return registers.sort((a, b) => (a.dateTime > b.dateTime) ? -1 : 1);
   }
   /**
    * Returns a array that contains the registers of all the banks

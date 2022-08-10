@@ -46,6 +46,7 @@
   <ng-template #tableRegisters>
     <app-table-registers
       *ngIf="this.bankArray"
+      [textSearch]="this.textSearch"
       [dataSource]="this.filterTextOn ? this.bankArrayFiltered : this.bankArray"
     >
     </app-table-registers>

@@ -29,7 +29,8 @@ export class CustomAggregateBanksComponent implements OnInit {
   public bankCreditCards: string[] = [];
 
   public totalMatch: number = 0;
-  filterTextOn: any;
+  public filterTextOn: boolean = false;
+  public textSearch: string = '';
 
   /**
    * Inject dependencies
@@ -45,11 +46,10 @@ export class CustomAggregateBanksComponent implements OnInit {
 
       const result$ = this.readFilesService.readCSV('assets/payments500000v2.csv');
       const data = await lastValueFrom(result$)
-      this.bankArray = this.searchService.loadData(data, 3525);
+      this.bankArray = this.searchService.loadData(data, 100);
       this.aggregateCurrentBank()
       this.bankCreditCards = this.setCreditCard(this.bankArray);
       this.loadGraph(this.bankSummary);
-
 
     } catch (error) {
       console.error(error)
@@ -93,14 +93,17 @@ export class CustomAggregateBanksComponent implements OnInit {
 
   public filterByText(textSearch: string) {
     this.totalMatch = this.searchService.getTotalMatch();
+    this.textSearch = textSearch;
     const resultFilter = this.searchService.getRegisterFiltered();
-    if (resultFilter.length > 0) {
+    this.filterTextOn = textSearch.length > 0
+    if (this.filterTextOn) {
       this.bankArrayFiltered = resultFilter;
     } else {
-
-      this.bankArrayFiltered = []
+      this.bankArrayFiltered = [];
     }
-    this.filterTextOn = this.bankArrayFiltered.length > 0;
-    // TODO.. bug always appear a register
+  }
+
+  private getDistinctData(data: string) {
+
   }
 }

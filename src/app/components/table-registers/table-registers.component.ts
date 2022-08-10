@@ -22,15 +22,13 @@ export class TableRegistersComponent implements OnInit {
     'country',
   ]
   @Input() public maxRegistersPaginate: number = 1000;
+  @Input() public textSearch: string = '';
   @Input() public pageSizeOptions: number[] = [5, 10, 20, 50, 100];
   @Input()
   set dataSource(registerBanks: Bank[]) {
-    if (registerBanks.length > 0) {
-      this._dataSource = new MatTableDataSource<Bank>(registerBanks);
-      // this._dataSource = new MatTableDataSource<Bank>(registerBanks.slice(1, this.maxRegistersPaginate + 1));
-      this.cdr.detectChanges();
-      this._dataSource.paginator = this.paginator
-    }
+    this._dataSource = new MatTableDataSource<Bank>(registerBanks);
+    this.cdr.detectChanges();
+    this._dataSource.paginator = this.paginator
   }
   public _dataSource = new MatTableDataSource<Bank>();
 
